@@ -7,7 +7,6 @@ import (
 	"math"
 	"os"
 	"strconv"
-	"strings"
 	"unicode"
 	"unicode/utf8"
 )
@@ -34,17 +33,17 @@ func (seg *Segmenter) Dictionary() *Dictionary {
 
 // 从文件中载入词典
 //
-// 可以载入多个词典文件，文件名用","分隔，排在前面的词典优先载入分词，比如
-// 	"用户词典.txt,通用词典.txt"
+// 可以载入多个词典文件。当载入多个词典文件时，排在前面的词典优先载入分词，比如：
+// LoadDictionary("用户词典.txt", "通用词典.txt")
 // 当一个分词既出现在用户词典也出现在通用词典中，则优先使用用户词典。
 //
 // 词典的格式为（每个分词一行）：
 //	分词文本 频率 词性
 //
 // 如果返回error，表示载入词典失败
-func (seg *Segmenter) LoadDictionary(files string) error {
+func (seg *Segmenter) LoadDictionary(files ...string) error {
 	seg.dict = NewDictionary()
-	for _, file := range strings.Split(files, ",") {
+	for _, file := range files {
 		dictFile, err := os.Open(file)
 		defer dictFile.Close()
 		if err != nil {
