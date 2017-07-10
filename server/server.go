@@ -26,7 +26,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/huichen/sego"
+	"github.com/m3ng9i/sego"
 	"io"
 	"log"
 	"net/http"
