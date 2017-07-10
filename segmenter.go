@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"unicode"
 	"unicode/utf8"
+    "errors"
 )
 
 const (
@@ -42,6 +43,10 @@ func (seg *Segmenter) Dictionary() *Dictionary {
 //
 // 如果返回error，表示载入词典失败
 func (seg *Segmenter) LoadDictionary(files ...string) error {
+    if len(files) == 0 {
+        return errors.New("load dictionary failed: no files provided.")
+    }
+
 	seg.dict = NewDictionary()
 	for _, file := range files {
 		dictFile, err := os.Open(file)
