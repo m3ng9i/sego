@@ -4,7 +4,6 @@ package sego
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"math"
 	"os"
 	"strconv"
@@ -41,14 +40,15 @@ func (seg *Segmenter) Dictionary() *Dictionary {
 //
 // 词典的格式为（每个分词一行）：
 //	分词文本 频率 词性
-func (seg *Segmenter) LoadDictionary(files string) {
+//
+// 如果返回error，表示载入词典失败
+func (seg *Segmenter) LoadDictionary(files string) error {
 	seg.dict = NewDictionary()
 	for _, file := range strings.Split(files, ",") {
-		log.Printf("载入sego词典 %s", file)
 		dictFile, err := os.Open(file)
 		defer dictFile.Close()
 		if err != nil {
-			log.Fatalf("无法载入字典文件 \"%s\" \n", file)
+            return err
 		}
 
 		reader := bufio.NewReader(dictFile)
@@ -124,7 +124,7 @@ func (seg *Segmenter) LoadDictionary(files string) {
 		}
 	}
 
-	log.Println("sego词典载入完毕")
+	return nil
 }
 
 // 对文本分词
