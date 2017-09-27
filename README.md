@@ -41,3 +41,8 @@ func main() {
 	fmt.Println(sego.SegmentsToString(segments, false)) 
 }
 ```
+
+# fork说明
+
+[查看本fork做出的修改](change.md)
+
